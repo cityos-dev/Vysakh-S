@@ -1,1 +1,36 @@
 version: "3.8"
+
+services:
+  mysql-db:
+    image: mysql:8.0.32-oracle
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=cityos
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+
+  video-app:
+    depends_on:
+      - mysql-db
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: on-failure
+    env_file: ./video-app.env
+    ports:
+      - "8080:8080"
+    stdin_open: true
+    tty: true
+    command: mvn spring-boot:run
+    healthcheck:
+      test: [ "CMD", "curl", "http://localhost:8080/v1/health" ]
+      interval: 5s
+      timeout: 5s
+      retries: 2
+      start_period: 30s
+
+volumes:
+  db:
