@@ -1,5 +1,5 @@
 CREATE TABLE video_details (
-	id int primary key AUTO_INCREMENT,
+	id varchar(15) primary key,
 	location varchar(500) not null,
 	hash varchar(50) not null,
 	file_size float(2) not null,

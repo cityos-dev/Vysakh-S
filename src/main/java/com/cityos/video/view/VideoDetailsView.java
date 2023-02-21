@@ -4,23 +4,23 @@ import java.time.LocalDateTime;
 
 public class VideoDetailsView {
 
-    private int fileId;
+    private String fileId;
     private String name;
     private float size;
     private LocalDateTime createdAt;
 
-    public VideoDetailsView(int fileId, String name, float size, LocalDateTime createdAt) {
+    public VideoDetailsView(String fileId, String name, float size, LocalDateTime createdAt) {
         this.fileId = fileId;
         this.name = name;
         this.size = size;
         this.createdAt = createdAt;
     }
 
-    public int getFileId() {
+    public String getFileId() {
         return fileId;
     }
 
-    public void setFileId(int fileId) {
+    public void setFileId(String fileId) {
         this.fileId = fileId;
     }
 

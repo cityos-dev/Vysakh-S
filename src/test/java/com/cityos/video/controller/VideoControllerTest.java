@@ -51,7 +51,7 @@ class VideoControllerTest {
     @Test
     void verify_videoDetails_worksNormally() throws Exception {
         LocalDateTime now = LocalDateTime.now();
-        VideoDetailsView view = new VideoDetailsView(1, "sample.mp4", 2.3F, now);
+        VideoDetailsView view = new VideoDetailsView("1", "sample.mp4", 2.3F, now);
         when(videoService.getVideoDetails()).thenReturn(List.of(view));
         mockMvc.perform(MockMvcRequestBuilders.get("/v1/files")).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].fileId").value("1"))
@@ -62,7 +62,7 @@ class VideoControllerTest {
 
     @Test
     void verify_deleteVideo_worksNormally() throws Exception {
-        final int id = 1;
+        final String id = "1";
         ResponseEntity<String> response = ResponseEntity.status(HttpStatusCode.valueOf(204)).body("File was successfully removed");
         when(videoService.deleteVideo(id)).thenReturn(response);
         mockMvc.perform(MockMvcRequestBuilders.delete("/v1/files/{id}", id)).andExpect(status().is(204))

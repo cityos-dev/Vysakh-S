@@ -124,7 +124,7 @@ class VideoServiceTest {
         List<VideoDetailsView> response = assertDoesNotThrow(() -> videoService.getVideoDetails());
         assertEquals(1, response.size());
         VideoDetailsView view = response.get(0);
-        assertEquals(1, view.getFileId());
+        assertEquals("abc", view.getFileId());
         assertEquals("sample.mp4", view.getName());
         assertEquals(2.3F, view.getSize());
         assertEquals(details.getCreatedAt(), view.getCreatedAt());
@@ -133,18 +133,18 @@ class VideoServiceTest {
 
     @Test
     void verify_deleteVideo_throwsException_whenVideoWithIdDoesNotExist() {
-        final int id = 10;
+        final String id = "abc";
         when(detailsRepo.findById(id)).thenReturn(Optional.empty());
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> videoService.deleteVideo(id));
         assertEquals(HttpStatusCode.valueOf(404), exception.getStatusCode());
-        assertEquals("404 NOT_FOUND \"Video with the id 10 does not exist\"", exception.getMessage());
+        assertEquals("404 NOT_FOUND \"Video with the id abc does not exist\"", exception.getMessage());
         verify(detailsRepo, times(1)).findById(id);
-        verify(detailsRepo, times(0)).deleteById(any(Integer.class));
+        verify(detailsRepo, times(0)).deleteById(any(String.class));
     }
 
     @Test
     void verify_deleteVideo_worksNormally() {
-        final int id = 1;
+        final String id = "abc";
         VideoDetails details = TestFixture.getDummyVideoDetails();
         when(detailsRepo.findById(id)).thenReturn(Optional.of(details));
         try {
@@ -163,17 +163,17 @@ class VideoServiceTest {
 
     @Test
     void verify_downloadVideo_throwsException_whenVideoWithIdDoesNotExist() {
-        final int id = 10;
+        final String id = "abc";
         when(detailsRepo.findById(id)).thenReturn(Optional.empty());
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> videoService.downloadVideo(id));
         assertEquals(HttpStatusCode.valueOf(404), exception.getStatusCode());
-        assertEquals("404 NOT_FOUND \"Video with the id 10 does not exist\"", exception.getMessage());
+        assertEquals("404 NOT_FOUND \"Video with the id abc does not exist\"", exception.getMessage());
         verify(detailsRepo, times(1)).findById(id);
     }
 
     @Test
     void verify_downloadVideo_worksNormally() {
-        final int id = 1;
+        final String id = "abc";
         VideoDetails details = TestFixture.getDummyVideoDetails();
         when(detailsRepo.findById(id)).thenReturn(Optional.of(details));
         Resource resource = assertDoesNotThrow(() -> videoService.downloadVideo(id));

@@ -9,7 +9,7 @@ import java.util.UUID;
 public class TestFixture {
     public static VideoDetails getDummyVideoDetails() {
         VideoDetails details = new VideoDetails(UUID.randomUUID() + "/" + "sample.mp4", "jhbcjdhsc", 2.3F);
-        ReflectionTestUtils.setField(details, "id", 1);
+        ReflectionTestUtils.setField(details, "id", "abc");
         LocalDateTime now = LocalDateTime.now();
         ReflectionTestUtils.setField(details, "createdAt", now);
         return details;

@@ -2,9 +2,8 @@ package com.cityos.video.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -13,8 +12,7 @@ import java.time.LocalDateTime;
 public class VideoDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private final String id;
     private String location;
     private String hash;
     private Float fileSize;
@@ -23,15 +21,17 @@ public class VideoDetails {
     private LocalDateTime createdAt;
 
     public VideoDetails() {
+        id = RandomStringUtils.randomAlphabetic(15);
     }
 
     public VideoDetails(String location, String hash, Float fileSize) {
+        id = RandomStringUtils.randomAlphabetic(15);
         this.location = location;
         this.hash = hash;
         this.fileSize = fileSize;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 

@@ -52,7 +52,7 @@ public class VideoService {
             String fileName = file.getOriginalFilename();
             // verifying the extension - should be mp4
             assert fileName != null;
-            if (!fileName.endsWith(".mp4")) {
+            if (!fileName.endsWith(".mp4") && !fileName.endsWith(".mpg")) {
                 throw new ResponseStatusException(HttpStatusCode.valueOf(415), "The file format should be mp4");
             }
             Path path = Path.of(parameterService.getVideoLocation(fileName));
@@ -88,7 +88,7 @@ public class VideoService {
     }
 
     @Transactional
-    public ResponseEntity<String> deleteVideo(int id) {
+    public ResponseEntity<String> deleteVideo(String id) {
         Optional<VideoDetails> detailsOptional = detailsRepo.findById(id);
         VideoDetails videoDetails = detailsOptional.orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404),
                 String.format("Video with the id %s does not exist", id)));
@@ -104,7 +104,7 @@ public class VideoService {
     }
 
     @Transactional(readOnly = true)
-    public Resource downloadVideo(int id) {
+    public Resource downloadVideo(String id) {
         Optional<VideoDetails> detailsOptional = detailsRepo.findById(id);
         VideoDetails videoDetails = detailsOptional.orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404),
                 String.format("Video with the id %s does not exist", id)));

@@ -36,12 +36,12 @@ public class VideoController {
     }
 
     @DeleteMapping("files/{id}")
-    public ResponseEntity<String> deleteVideo(@PathVariable("id") int id) {
+    public ResponseEntity<String> deleteVideo(@PathVariable("id") String id) {
         return videoService.deleteVideo(id);
     }
 
     @GetMapping("files/{id}")
-    public ResponseEntity<Resource> downloadVideo(@PathVariable("id") int id) {
+    public ResponseEntity<Resource> downloadVideo(@PathVariable("id") String id) {
         Resource resource = videoService.downloadVideo(id);
         String contentType = "application/octet-stream";
         String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
